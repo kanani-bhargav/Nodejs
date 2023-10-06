@@ -4,8 +4,6 @@ const { userValidation } = require("../../validations");
 const { userController } = require("../../controllers");
 const validate = require("../../middlewares/validate");
 
-
-
 const router = express.Router();
 
 /** create user */
@@ -14,5 +12,26 @@ router.post(
   validate(userValidation.createUser),
   userController.createUser
 );
+
+/** Get user list */
+router.get(
+  "/list-user",
+  validate(userValidation.getUserList),
+  userController.getUserList
+);
+
+/** Delete user */
+router.delete(
+  "/delete-user/:userId",
+  validate(userValidation.getUserDetails),
+  userController.deleteUser
+);
+
+/**user details update id */
+router.put(
+  "/update-user/:userId",
+  validate(userValidation.updateUserDetails),
+  userController.updateUserDetails
+  )
 
 module.exports = router;
