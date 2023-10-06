@@ -1,13 +1,16 @@
-const express=require('express')
+const express = require("express");
+const sportRoutes = require("./sport.route");
+const sportOpinionRoutes = require("./sportOpinion.route");
+const sportStudentRoutes = require("./sportStudent.route");
+const sportTestimonialRoutes = require("./sportTestimonial.route");
+const sportTrainingRoutes = require("./sportTraining.route");
 
-const router=express.Router()
+const router = express.Router();
 
-const userRoute=require('./user.route')
-const tokenRoute=require('./token.route')
-const bannerRoute=require('./banner.route')
+router.use("/sport", sportRoutes);
+router.use("/sportOpinion", sportOpinionRoutes);
+router.use("/sportStudent", sportStudentRoutes);
+router.use("/sportTestimonial", sportTestimonialRoutes);
+router.use("/sportTraining", sportTrainingRoutes);
 
-router.use('/user',userRoute)
-router.use('/token',tokenRoute)
-router.use('/banner',bannerRoute)
-
-module.exports=router
+module.exports = router;
