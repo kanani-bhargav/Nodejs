@@ -1,14 +1,16 @@
 const Joi = require("joi");
 const dotenv = require("dotenv");
 
-dotenv.config();
+dotenv.config({ path: "./.env"});
 
 const envVarsSchema = Joi.object({
   PORT: Joi.number().default(3000),
   MONGODB_URL: Joi.string().trim().description("Mongodb url"),
-  BASE_URL: Joi.string().trim().description("base url"),
-  JWT_SECRET_KEY: Joi.string().description("Jwt sectreat key"),
-  SMTP_HOST: Joi.string().description("server that will send emails"),
+  BASE_URL: Joi.string().trim().description("Base URL"),
+  JWT_SECRET_KEY: Joi.string()
+    .description("Jwt sectreat key")
+    .default("thisisjwtsecreat_key"),
+  SMTP_HOST: Joi.string().description("server that will send the emails"),
   SMTP_PORT: Joi.number().description("port to connect to the email server"),
   SMTP_USERNAME: Joi.string().description("username for email server"),
   SMTP_PASSWORD: Joi.string().description("password for email server"),
@@ -17,12 +19,22 @@ const envVarsSchema = Joi.object({
   ),
 }).unknown();
 
-const { value: envVars, error } = envVarsSchema
-  .prefs({ errors: { label: "key" } })
-  .validate(process.env);
+// const { value: envVars, error } = envVarsSchema
+//   .prefs({ errors: { label: "key" } })
+//   .validate(process.env);
 
-if (error) {
-  console.log("Config Error: ", error);
+// if (error) {
+//   console.log("Config Error: ", error);
+// }
+
+// Easy method
+const validation_result = envVarsSchema.validate(process.env)
+console.log(validation_result);
+
+const envVars = validation_result.value
+const config_error = validation_result.error
+if(config_error){
+  console.log("Config error:"+config_error);
 }
 
 module.exports = {
@@ -35,15 +47,18 @@ module.exports = {
     },
   },
   base_url: envVars.BASE_URL,
-  email:{
-    smtp:{
-      host:envVars.SMTP_HOST,
-      port:envVars.SMTP_PORT,
-      auth:{
-        user:envVars.SMTP_USERNAME,
-        pass:envVars.SMTP_PASSWORD,
-      }
+  jwt: {
+    secret_key: envVars.JWT_SECRET_KEY,
+  },
+  email: {
+    smtp: {
+      host: envVars.SMTP_HOST,
+      port: envVars.SMTP_PORT,
+      auth: {
+        user: envVars.SMTP_USERNAME,
+        pass: envVars.SMTP_PASSWORD,
+      },
     },
-    from:envVars.EMAIL_FROM,
-  }
+    from: envVars.EMAIL_FROM,
+  },
 };

@@ -1,15 +1,17 @@
-const http=require("http")
-const express = require("express"); //importing express module
-const bodyParser = require("body-parser"); //importing body-parser
-const { connectDB } = require("./db/dbConnection"); //importing connectdb
-const config = require("./config/config"); //importing config
-const routes = require("./routes/v1");
+const express = require("express");
+const bodyParser = require("body-parser");
 const cors = require("cors");
+const http = require("http");
+const { connectDB } = require("./db/dbConnection");
+const routes = require("./routes /v1");
+require("./helpers/crons");
+const config = require("./config/config");
 
-// Initializing express
 const app = express();
-/*
+
+/**
  * allow form-data from body
+ * form-data is use for image upload
  * parse application/x-www-form-urlencoded
  */
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,22 +27,22 @@ app.use(cors());
 app.options("*", cors());
 
 /** Get image */
-app.use(express.static(`${__dirname}/public`));
+app.use(express.static(`./public`));
 
 app.use("/v1", routes);
-
 /** whenever route not created and you try to use that route then throw error. */
 app.use((req, res, next) => {
   next(new Error("Route not found!"));
 });
 
+app.use(express.static("./public"));
+
 /** Database connection */
 connectDB();
 
-// Following block of code will be run when landing on http://localhost:3200/
 /** create server using http */
 const server = http.createServer(app);
 
 server.listen(config.port, () => {
-  console.log(`server listning port number ${config.port}!`);
+  console.log("server listning port number "+ config.port);
 });
