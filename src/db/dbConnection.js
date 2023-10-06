@@ -1,17 +1,16 @@
 const mongoose = require("mongoose");
 const config = require("../config/config");
 
-
-/* connecting Data base using mongoose*/
 const connectDB = async () => {
   mongoose
-    .connect(config.mongodb.url, config.mongodb.options)
+    .connect(config.mongoDB.url, config.mongoDB.options)
     .then((data) => {
-      console.log("Database connection successfully!");
+      console.log(`database connect successfully`);
     })
     .catch((error) => {
-      console.log("Database connetion error: ", error);
+      console.log(`database connection error`, error);
     });
 };
-
-module.exports = { connectDB };
+module.exports = {
+  connectDB,
+};
