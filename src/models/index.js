@@ -1,9 +1,4 @@
-module.exports.SportName = require("./sport.model");
-module.exports.SportOpinion = require("./sportOpinion.model");
-module.exports.SportStudent = require("./sportStudent.model");
-module.exports.SportTestimonial = require("./sportTestimonial.model");
-module.exports.SportTraining = require("./sportTraining.model");
-
-
-
+module.exports.Category = require("./category_model");
+module.exports.product = require("./product_model");
+module.exports.User = require("./user.model");
 

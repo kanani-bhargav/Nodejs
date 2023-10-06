@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 const config = require("../config/config");
 
-
-/* connecting Data base using mongoose*/
 const connectDB = async () => {
   mongoose
     .connect(config.mongodb.url, config.mongodb.options)
