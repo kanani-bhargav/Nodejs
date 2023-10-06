@@ -2,29 +2,28 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    user_firstname:{
-        type:String,
-        trim:true
+    first_name: {
+      type: String,
+      trim: true,
     },
-    user_lastname:{
-        type:String,
-        trim:true
+    last_name: {
+      type: String,
+      trim: true,
     },
-    user_email:{
-        type:String,
-        trim:true
+    email: {
+      type: String,
+      trim: true,
     },
-    user_password:{
-        type:String,
-        trim:true
+    address: {
+      type: String,
+      trim: true,
     },
-    user_address:{
-        type:String,
-        trim:true
+    password: {
+      type: String,
     },
-    is_active:{
-        type:Boolean,
-        default:true
+    is_active: {
+      type: Boolean,
+      default: true,
     },
   },
   {
@@ -32,5 +31,6 @@ const userSchema = new mongoose.Schema(
     versionKey: false,
   }
 );
+
 const User = mongoose.model("user", userSchema);
 module.exports = User;

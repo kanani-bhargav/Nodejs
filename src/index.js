@@ -1,10 +1,10 @@
-const express = require("express"); //importing express module
 const http=require("http")
+const express = require("express"); //importing express module
 const bodyParser = require("body-parser"); //importing body-parser
-const category = require("./models/index"); // * importing models *//
 const { connectDB } = require("./db/dbConnection"); //importing connectdb
 const config = require("./config/config"); //importing config
 const routes = require("./routes/v1");
+const cors = require("cors");
 
 // Initializing express
 const app = express();
@@ -12,13 +12,20 @@ const app = express();
  * allow form-data from body
  * parse application/x-www-form-urlencoded
  */
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 /**
  * allow json data from body
  * parse application/json
  */
 app.use(bodyParser.json());
+
+/** enable cors */
+app.use(cors());
+app.options("*", cors());
+
+/** Get image */
+app.use(express.static(`${__dirname}/public`));
 
 app.use("/v1", routes);
 
